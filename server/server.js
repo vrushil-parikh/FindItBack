@@ -3,8 +3,8 @@ import 'dotenv/config';
 import cors from 'cors';
 import connectCloudinary from './config/cloudinary.js';
 import connectDB from './config/db.js'; 
-
-
+import { clerkWebhooks } from './controllers/webhooks.js';
+import { clerkMiddleware } from '@clerk/express'
 
 const app = express();
 
@@ -13,13 +13,13 @@ await connectDB();
 await connectCloudinary();
 
 
-app.use(express.json());
 app.use(cors());
-
+app.use(express.json());
+app.use(clerkMiddleware())
 
 
 app.get('/', (req, res) => res.send("Api is working"))
-
+app.post('/webhooks',clerkWebhooks)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,()=>{
