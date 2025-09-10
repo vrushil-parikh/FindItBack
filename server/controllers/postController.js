@@ -1,3 +1,7 @@
+// NOTE
+// Post model updated for category, image URLs, and createdBy now we just have to fetch user details automatic and store images with URLs.
+
+
 import Post from '../models/post.js';
 
 // Create a new post
