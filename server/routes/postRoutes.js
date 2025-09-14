@@ -1,12 +1,19 @@
-import { Router } from 'express';
-import { createPost, getAllPosts, getPostById, updatePost, deletePost } from '../controllers/postController.js';
+import { Router } from "express";
+import {
+  createPost,
+  getAllPosts,
+  getPostById,
+  updatePost,
+  deletePost,
+} from "../controllers/postController.js";
+import { upload } from "../config/cloudinary.js";
 
 const postRoutes = Router();
 
-postRoutes.post('/createpost', createPost);
-postRoutes.get('/getallposts', getAllPosts);
-postRoutes.get('/getpost/:id', getPostById);
-postRoutes.put('/updatepost/:id', updatePost);
-postRoutes.delete('/deletepost/:id', deletePost);
+postRoutes.post("/", upload.array("images", 5), createPost);
+postRoutes.get("/", getAllPosts);
+postRoutes.get("/:id", getPostById);
+postRoutes.put("/:id", upload.array("images", 5), updatePost);
+postRoutes.delete("/:id", deletePost);
 
 export default postRoutes;
